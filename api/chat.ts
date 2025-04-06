@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
 const GEMINI_URL =
-  "https://generativelanguage.googleapis.com/v1/models/gemini-1.0-pro:generateContent";
+  "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent";
 const TTS_URL = "https://texttospeech.googleapis.com/v1/text:synthesize";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -54,7 +54,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const geminiData = await geminiResponse.json();
-    console.log("Gemini API response:", JSON.stringify(geminiData, null, 2));
+    console.log("Gemini API response received");
 
     let textResponse = "";
     if (geminiData.candidates && geminiData.candidates[0]?.content?.parts) {
@@ -92,10 +92,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const ttsData = await ttsResponse.json();
-    console.log(
-      "TTS API response received, length:",
-      ttsData.audioContent ? ttsData.audioContent.length : 0
-    );
+    console.log("TTS API response received");
 
     return res.status(200).json({
       text: textResponse,
