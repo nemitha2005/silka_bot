@@ -1,6 +1,6 @@
 {
-  "repository": "https://github.com/vercel/examples.git",
-  "license": "MIT",
+  "name": "ai-chatbot-server",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "node-fetch": "^2.6.7"
