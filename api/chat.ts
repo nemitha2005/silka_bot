@@ -78,7 +78,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       body: JSON.stringify({
         input: { text: textResponse },
         voice: { languageCode: "en-US", ssmlGender: "NEUTRAL" },
-        audioConfig: { audioEncoding: "MP3" },
+        audioConfig: {
+          audioEncoding: "LINEAR16",
+          sampleRateHertz: 16000,
+          effectsProfileId: ["small-bluetooth-speaker-class-device"],
+        },
       }),
     });
 
@@ -92,11 +96,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const ttsData = await ttsResponse.json();
-    console.log("TTS API response received");
+    console.log("TTS API response received (PCM format)");
 
     return res.status(200).json({
       text: textResponse,
       audio: ttsData.audioContent,
+      format: "LINEAR16",
+      sampleRate: 16000,
     });
   } catch (error) {
     console.error("Error processing request:", error);
